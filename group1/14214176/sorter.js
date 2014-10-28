@@ -67,7 +67,7 @@ function strCompare(arr, index, direction) {
 	return objs;
 }
 
-//按列序号排序
+//按列排序
 //table:table
 //index:需要排序的列序号
 //direction:排序方向
@@ -100,7 +100,8 @@ function sortTableByCol(table, index, direction) {
 
 
 
-//根据给table->t->td添加事件
+//根据给table->th->td添加事件
+//table:table元素
 function addThEvent(table) {
 	var ths = table.rows[0].cells;
 	for (var i = 0; i < ths.length; i++) {
@@ -138,6 +139,7 @@ function addThEvent(table) {
 
 
 //使table元素变得sortable
+//table_doms:table元素组
 function makeAllTablesSortable(table_doms) {
 	for (var i = 0; i < table_doms.length; i++) {
 		addThEvent(table_doms[i]);
@@ -148,10 +150,10 @@ function makeAllTablesSortable(table_doms) {
 
 //加载所有元素后执行
 window.onload = function() {
-
-	var t_todo = document.getElementById('todo');
+	/*var t_todo = document.getElementById('todo');
 	var t_staff = document.getElementById('staff');
-	var doms = [t_todo, t_staff];
+	var doms = [t_todo, t_staff];*/
+	var doms = document.getElementsByTagName('table');
 
 	makeAllTablesSortable(doms);
 }
