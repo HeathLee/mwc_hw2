@@ -1,7 +1,11 @@
+/*功能都已经实现。这里提两点建议：
+1.如果makeAllTableSortable函数里面的功能太多，如果能够拆封出几个单一功能的函数，我觉得会更容易读点；
+2.点击事件函数最好单独提出来，不然每个表头点击事件都需要生成一重复的函数。*/
 window.onload = function() {
 	var tables = getAllTables();
 	makeAllTableSortable(tables);
 }
+
 function getAllTables() {
 	return document.getElementsByTagName("table");
 }

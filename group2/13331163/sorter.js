@@ -1,3 +1,11 @@
+/*
+功能都已经实现，主要是对样式修改提出了两点建议：
+
+1.当js涉及到到样式修改时，最好在css文件来定义一个样式，然后通过修改元素的class属性来修改样式；
+2.偶数和奇数行的样式最好通过css选择器（nth-child(2n)）来实现。
+*/
+
+
 function changeTableLineColor(oTable) {
 	var oTbody = oTable.getElementsByTagName("tbody")[0];
 	var aTr = oTbody.getElementsByTagName("tr");

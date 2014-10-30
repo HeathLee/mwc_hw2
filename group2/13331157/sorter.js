@@ -1,3 +1,7 @@
+
+/*
+功能都已经实现，个人觉得完成的挺好，暂时没有什么建议。
+*/
 /*
 FileName: sorter.js;
 Author: linyiting;
