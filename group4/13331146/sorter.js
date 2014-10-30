@@ -1,3 +1,8 @@
+/*
+作业所要求的功能还没全部完成，只完成了排序，表头颜色和图标的更改还没实现，而且
+点击排序的时候，没能做到奇数行保持白色，偶数行保持浅灰色，但程序优点是模块划分
+清晰，且有一定的注释
+*/
 window.onload = function() {
   var tables = getAllTables();
   makeAllTablesSortable(tables);
