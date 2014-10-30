@@ -75,11 +75,14 @@ function sortTableByCol(table, index, direction) {
 	index = (index == undefined) ? 0 : index;
 	direction = (direction == undefined) ? DIRECTION[0] : direction;
 	//初始化，用一个二维数组存储表格内容信息
-	var trs = table.rows;
+	var trs = table.getElementsByTagName('tbody')[0].rows;
 	var trs_copy = [];
-	for (var i = 1; i < trs.length; i++) { //由于表头占一行，所以从一开始
-		var cells = trs[i].cells;
-		var cells_copy = [];
+	var cells_copy = [];
+	var cells;
+
+	for (var i = 0; i < trs.length; i++) {
+		cells = trs[i].cells;
+		cells_copy = [];
 		for (var j = 0; j < cells.length; j++) {
 			cells_copy.push(cells[j].innerText);
 		}
@@ -89,10 +92,10 @@ function sortTableByCol(table, index, direction) {
 	//根据排序结果重写表格td内容
 	var sortObjs = strCompare(trs_copy, index, direction);
 
-	for (var i = 1; i < trs.length; i++) {
-		var cells = trs[i].cells;
+	for (var i = 0; i < trs.length; i++) {
+		cells = trs[i].cells;
 		for (var j = 0; j < cells.length; j++) {
-			cells[j].innerText = sortObjs[i - 1].str[j]; //返回的排序结果是没有表头这一行的所以i-1
+			cells[j].innerText = sortObjs[i].str[j];
 		}
 	}
 
@@ -137,6 +140,9 @@ function addThEvent(table) {
 	}
 }
 
+function getAllTables() {
+	return document.getElementsByTagName('table');
+}
 
 //使table元素变得sortable
 //table_doms:table元素组
@@ -146,14 +152,8 @@ function makeAllTablesSortable(table_doms) {
 	}
 }
 
-
-
 //加载所有元素后执行
 window.onload = function() {
-	/*var t_todo = document.getElementById('todo');
-	var t_staff = document.getElementById('staff');
-	var doms = [t_todo, t_staff];*/
-	var doms = document.getElementsByTagName('table');
-
-	makeAllTablesSortable(doms);
+	var tables = getAllTables();
+	makeAllTablesSortable(tables);
 }
