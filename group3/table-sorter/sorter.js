@@ -8,10 +8,12 @@ function getAllTables() {
 }
 
 function makeAllTablesSortable(tables) {
-		count = new Array();   //为每个表头注册计数器，用于判断ascend或descend函数的执行
+		count = new Array();   //为每个表头注册计数器并初始化为0，用于判断ascend或descend函数的执行
 		for (var a = 0; a < 6; a++)
 		count[a] = 0;
-		classNam = null;
+
+		classNam = null; //存放上一次所点击表头的css，在下一次点击时便于清除
+		
 		for (var i = 0; i < 2; i++)
 			for (var j = 0; j < 3; j++) {
 				tables[i].getElementsByTagName("th")[j].onclick = sort;
@@ -19,22 +21,26 @@ function makeAllTablesSortable(tables) {
 }
 
 function sort() {
-	text = this.childNodes[0].nodeValue;
+	text = this.childNodes[0].nodeValue;  //text用于ascend和descend的第一步，通过匹配text获取两个函数内的a和b
 	for (var i = 0; i < 2; i++)
 		for (var j = 0; j < 3; j++)
-			if (this == document.getElementsByTagName("table")[i].getElementsByTagName("th")[j])
-				if (checkCount(i, j) % 2 == 0) {
-					if (classNam) 
-						classNam.className = classNam.className.replace('changeToAscend','TRclean');
+			if (this == document.getElementsByTagName("table")[i].getElementsByTagName("th")[j])  /到鼠标点击处的表头
+				if (checkCount(i, j) % 2 == 0) {   //判断升降序并改变css
+					if (classNam) {
+						classNam.className = classNam.className.replace('changeToAscend','');
+						classNam.className = classNam.className.replace('changeToDescend','');   
+					}
 					this.className = "changeToAscend";
 					ascend();
 				} else {
-					if (classNam) 
-						classNam.className = classNam.className.replace('changeToDescend','TRclean');
+					if (classNam) {
+						classNam.className = classNam.className.replace('changeToAscend','');
+						classNam.className = classNam.className.replace('changeToDescend','');
+					}
 					this.className = "changeToDescend";
 					descend();
 				}
-	classNam = this;
+	classNam = this;   //存入本次CSS的classname，供下次更改
 }
 
 function descend() {
@@ -46,8 +52,8 @@ function descend() {
 				var b = j;
 				break;
 			}
-	var values = getALLValues(a, b);   //获取在a，b位置的列的文本，供compare比较
-	var valuesParent = getParent(values);  //values父节点，供compare交换
+	var values = getALLValues(a, b);   //获取在a，b位置的列的td，用其文本在compare中比较
+	var valuesParent = getParent(values);  /alues父节点，供compare交换
 	compare(values, valuesParent); //compare降序
 }   
 
@@ -61,7 +67,7 @@ function ascend() {
 				break;
 			}
 	var values = getALLValues(a, b);   //获取在a，b位置的列的td，用其文本在compare中比较
-	var valuesParent = getParent(values);  //values父节点，供compare交换
+	var valuesParent = getParent(values);  /alues父节点，供compare交换
 	compare(values, valuesParent); //compare降序
 	//首末转换
 	var temp = valuesParent[1].innerHTML;
