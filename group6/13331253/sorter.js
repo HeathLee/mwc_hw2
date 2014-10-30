@@ -1,200 +1,72 @@
-window.onload = function  () {
+/*
+13331253
+group 6
+王水
+*/
+window.onload = function  () { //当窗口打开时，将网页中的表格转化为sortable
 	var tables = getAllTables();
 	makeAllTablesSortable(tables);
-
-	// body...
 }
 function getAllTables () {
-	var tables = document.getElementsByTagName('table');
+	var tables = document.getElementsByTagName('table');//获取所有包含table的表格
 	return tables;
-	// body...
 }
 var table_num;
 function makeAllTablesSortable (tables) {
-	/*var thcount = tables.target.getElementsByTagName('table');*/
-	/*alert(thcount.length);*/
-	for ( table_num = 0;table_num < tables.length;table_num++) {
-		var thead = tables[0].getElementsByTagName('thead');
-		var th =thead[0].getElementsByTagName('th');
-		var th2 = tables[1].getElementsByTagName('th');
-		var tbody = tables[0].getElementsByTagName('tbody');
-		var tbody2 = tables[1].getElementsByTagName('tbody');
-		var arr = [];
-		var len = [];
-
-		var isAsc = true;
-
-		//for (var j = 0;j < th.length;j++) {
-			th[0].onclick = function () {
-				if (isAsc) {
-				for (var k = 0;k < tables[0].rows.length - 1;k++) {
-					arr[k] = tables[0].rows[k+1];
-					len[k] = tbody[0].rows[k].cells[0].innerHTML.length
-					/*alert(tables[0].rows[k+1].innerHTML)
-					alert("k");
-					alert(tables[0].rows[k+1].cells[0].innerHTML);
-					alert(tables[0].rows[k+1].cells[0].innerHTML.length);*/
-				}
-				/*for (var k = 0;k < tables[0].rows.length - 1;k++ ) {
-					if (len[k] < len[k+1]) {
-						arr[k] = tbody[0].rows[k+1];
-						arr[k+1] = tbody[0].rows[k];
-					}
-					else {
-						arr[k] = tbody[0].rows[k];
-						arr[k+1] = tbody[0].rows[k+1];
-					}
-				}*/
-				
-				//for(var j = 0; j <  tbody[0].rows.length; j++ ) {
-                tbody[0].appendChild(arr[0]);
-                isAsc = false;
-            }	
-            	if(!isAsc) {
-            		for (var j = 0; j < arr.length; j++ ) {
-            			tbody[0].appendChild(arr[0]);
-
-            		}
-				isAsc = true;
-                //}
-			}
-
-			}
-			th[1].onclick = function () {
-				if (isAsc) {
-				for (var k = 0;k < tables[0].rows.length - 1;k++) {
-					arr[k] = tables[0].rows[k+1];
-					len[k] = tbody[0].rows[k].cells[1].innerHTML.length;
-					
-				}
-	
-                tbody[0].appendChild(arr[0]);
-                isAsc = false;
-            }	
-            	if(!isAsc) {
-            		for (var j = 0; j < arr.length; j++ ) {
-            			tbody[0].appendChild(arr[0]);
-
-            		}
-				isAsc = true;
- 
-			}
-
-			}
-			th[2].onclick = function () {
-				if (isAsc) {
-				for (var k = 0;k < tables[0].rows.length - 1;k++) {
-					arr[k] = tables[0].rows[k+1];
-					len[k] = tbody[0].rows[k].cells[2].innerHTML.length;
-					
-				}
-	
-                tbody[0].appendChild(arr[0]);
-                isAsc = false;
-            }	
-            	if(!isAsc) {
-            		for (var j = 0; j < arr.length; j++ ) {
-            			tbody[0].appendChild(arr[0]);
-
-            		}
-				isAsc = true;
- 
-			}
-
-			}
-
-
-
-				var brr = [];
-					for (var k = 0;k < tables[0].rows.length - 1;k++) {
-					brr[k] = tables[1].rows[k+1];
-					len[k] = tbody2[0].rows[k].cells[0].innerHTML.length
-					
-				}
-
-		
-			th2[0].onclick = function () {
-				if (isAsc) {
-				for (var k = 0;k < tables[1].rows.length - 1;k++) {
-					brr[k] = tables[1].rows[k+1];
-					len[k] = tbody2[0].rows[k].cells[0].innerHTML.length
-				
-				}
-				
-                tbody2[0].appendChild(brr[0]);
-                isAsc = false;
-            }	
-            	if(!isAsc) {
-            		for (var j = 0; j < brr.length; j++ ) {
-            			tbody2[0].appendChild(brr[0]);
-
-            		}
-				isAsc = true;
-                //}
-			}
-
-			}
-			th2[1].onclick = function () {
-				if (isAsc) {
-				for (var k = 0;k < tables[0].rows.length - 1;k++) {
-					brr[k] = tables[1].rows[k+1];
-					len[k] = tbody2[0].rows[k].cells[1].innerHTML.length;
-					
-				}
-	
-                tbody[0].appendChild(brr[0]);
-                isAsc = false;
-            }	
-            	if(!isAsc) {
-            		for (var j = 0; j < brr.length; j++ ) {
-            			tbody2[0].appendChild(brr[0]);
-
-            		}
-				isAsc = true;
- 
-			}
-
-			}
-			th2[2].onclick = function () {
-				if (isAsc) {
-				for (var k = 0;k < tables[1].rows.length - 1;k++) {
-					brr[k] = tables[1].rows[k+1];
-					len[k] = tbody2[0].rows[k].cells[2].innerHTML.length;
-					
-				}
-	
-                tbody[0].appendChild(brr[0]);
-                isAsc = false;
-            }	
-            	if(!isAsc) {
-            		for (var j = 0; j < brr.length; j++ ) {
-            			tbody2[0].appendChild(brr[0]);
-
-            		}
-				isAsc = true;
- 
-			}
-
-			}
-		//}
+	for ( table_num = 0;table_num < tables.length;table_num++){//得到符合要求的表格数
+		var thead = tables[table_num].getElementsByTagName('tr')[0].children;//得到每个表格的标题栏
+		for(var th_num = 0;th_num < thead.length;th_num++) {//为每个标题栏添加click事件监听器，并加上unsort属性
+			thead[th_num].className = "unsort";
+			thead[th_num].addEventListener('click',makesort);
+		}
 	}
+}
+function makesort () {
+	var thRows  = this.parentNode;  //this现在是标题栏，thRows用于之后向上遍历找到table
+	var isAsc = false;                          //将isAsc初始为false，作为升降序的判断条件
+			if (this.className == "ascend") {	
+				isAsc = true;
+			}
+		var heads = this.parentNode.children;
+    	for (var i = 0; i < heads.length; i++) {	//点击其他标题时移除之前的升序降序属性
+        heads[i].classList.remove("ascend", "descend");
+        heads[i].classList.add("unsort");
+    }
+
+			if (isAsc) {
+				this.className = "descend";               //如果之前是升序，则添加降序属性，高亮降序图标
+			} 
+			else {
+				this.className = "ascend";					//如果之前是降序，则添加升序属性，高亮升序图标
+			}
 
 
-
-
-
-
-
-/*	alert(i);
-	alert("year");
-	alert(thead.length);
-	alert(tables.length);
-	alert(tables[0]);
-	alert(tables[1]);*/
-	// body...
+    while (thRows.tagName !== "TABLE") {		//向上遍历之道找到table
+        thRows = thRows.parentNode;
+    }
+    var rows = thRows.getElementsByTagName("tr"); 
+    var index = this.cellIndex;
+    for (var i = 0; i < rows.length-1; i++) {//由于thead包含tr，所以tbody包含的行数等于总行数减1
+        for (var j = 1; j < rows.length-1-i; j++) {//使用冒泡排序法
+            var isbig = rows[j].children[index].innerHTML.localeCompare(rows[j+1].children[index].innerHTML);//用localeCompare比较字符串
+            if (this.classList.contains("descend"))
+            isbig = 0 - isbig;//如果是降序属性，就把比较的结果反向
+            if (isbig > 0) {
+                var tmp1 = rows[j+1].cloneNode(true);
+                var tmp2 = rows[j].cloneNode(true);
+                rows[j].parentNode.replaceChild(tmp1, rows[j]);
+                rows[j].parentNode.replaceChild(tmp2, rows[j+1]);
+            }
+        }
+    }
+    	//使栏目奇偶行的背景色保持奇数白色、偶数浅灰色
+    for (var i = 0; i < rows.length; i++) {
+        if (i % 2 !== 0) {
+            rows[i].classList.remove("alternate");
+        }
+        if (i % 2 === 0 && i !== 0) {
+            rows[i].classList.add("alternate");
+        }
+    }
 }
 
-/*function makeStortable (event) {
-
-	alert("stor");
-}*/
