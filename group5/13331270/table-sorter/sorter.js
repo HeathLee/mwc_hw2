@@ -33,7 +33,15 @@ function sortTables(tableId, iCol, nClick, dataType) {
     table.sortCol = iCol;  //记录最后一次排序的列索引  
 
     var th = document.getElementsByTagName("th");
-    for (var i = 0; i < th.length; i++) { //全部列原来的样式
+    var num;
+    if (nClick < 3) {
+        num = 3;
+        i = 0;
+    } else {
+        num = 6;
+        i = 3;
+    }
+    for (; i < num; i++) { //全部列原来的样式
     	th[i].className = 'nochange';
     }
     if (change[nClick] == 0) { //升序排列样式
