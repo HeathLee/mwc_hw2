@@ -1,47 +1,36 @@
 window.onload = function() {
-    var todo = document.getElementById('todo');
-    todo.rows[0].cells[0].addEventListener('click',SortByWhat);
-    todo.rows[0].cells[1].addEventListener('click',SortByWhen);
-    todo.rows[0].cells[2].addEventListener('click',SortByLocation);
-    var staff = document.getElementById('staff');
-    staff.rows[0].cells[0].addEventListener('click',SortByFName);
-    staff.rows[0].cells[1].addEventListener('click',SortByLName);
-    staff.rows[0].cells[2].addEventListener('click',SortByLcheckin);
+    var tables = getAllTables();
+    makeAllTablesSortable(tables);
 }
 
-function SortByWhat(event) {
-    sortTable("todo", 0);
-    titleBackground("todo", 0);
+function getAllTables() {
+    return document.getElementsByTagName("table");
 }
 
-function SortByWhen(event) {
-    sortTable("todo", 1);
-    titleBackground("todo", 1);
+function makeAllTablesSortable(tables) {
+    for (var i = 0; i < tables.length; i++) {
+        var ths = tables[i].getElementsByTagName("th");
+        for (var j = 0; j < ths.length; j++) {
+            ths[j].addEventListener("click", mySort);
+        }
+    }
 }
 
-function SortByLocation(event) {
-    sortTable("todo", 2);
-    titleBackground("todo", 2);
+function mySort() {
+    var Itable, Icol;
+    var ths = this.parentNode.children;
+    for (var i = 0; i < ths.length; i++) {
+        if (this == ths[i]) {
+            Icol = i;
+        }
+    }
+    var Itable = this.parentNode.parentNode.parentNode;
+    sortTable(Itable, Icol);
+    titleBackground(Itable, Icol);
 }
 
-function SortByFName(event) {
-    sortTable("staff", 0);
-    titleBackground("staff", 0);
-}
-
-function SortByLName(event) {
-    sortTable("staff", 1);
-    titleBackground("staff", 1);
-}
-
-function SortByLcheckin(event) {
-    sortTable("staff", 2);
-    titleBackground("staff", 2);
-}
-
-function sortTable(tableId, Icol) {
-    var table = document.getElementById(tableId);
-    var tbody = table.tBodies[0];
+function sortTable(Itable, Icol) {
+    var tbody = Itable.tBodies[0];
     var tr = tbody.rows;
 
     var trValue = new Array();
@@ -71,21 +60,17 @@ function sortTable(tableId, Icol) {
     tbody.sortCol = Icol;
 }
 
-function titleBackground(tableId, Icol) {
-    var table = document.getElementById(tableId);
-    var AltTable
-    if (tableId == "todo")
-        AltTable = document.getElementById("staff");
-    else
-        AltTable = document.getElementById("todo");
-    for (var i = 0; i < 3; i++) {
-        AltTable.rows[0].cells[i].id = "";
-        if (i != Icol)
-            table.rows[0].cells[i].id = "";
-    }
-    if (table.rows[0].cells[Icol].id == "upSort") {
-        table.rows[0].cells[Icol].id = "downSort";
-    } else {
-        table.rows[0].cells[Icol].id = "upSort";
+function titleBackground(Itable, Icol) {
+    var ths = Itable.getElementsByTagName("th");
+    for (var i = 0; i < ths.length; i++) {
+        if (i == Icol) {
+            if (ths[i].id == ""||ths[i].id == "downSort") {
+                ths[i].id = "upSort";
+            } else if (ths[i].id == "upSort") {
+                ths[i].id = "downSort";
+            }
+        } else {
+            ths[i].id = "";
+        }
     }
 }
