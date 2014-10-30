@@ -9,12 +9,11 @@
 function changeTableLineColor(oTable) {
 	var oTbody = oTable.getElementsByTagName("tbody")[0];
 	var aTr = oTbody.getElementsByTagName("tr");
-	var color = "#CCC";
 	for (var i = 0; i < aTr.length; i++) {
 		if (i % 2 == 1) {
-			aTr[i].style.backgroundColor = color;
+			aTr[i].className = "colorGray";
 		} else {
-			aTr[i].style.backgroundColor = '';
+			aTr[i].className = '';
 		}
 	}
 }
