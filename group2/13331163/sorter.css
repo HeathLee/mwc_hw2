@@ -16,3 +16,9 @@ th, td {
 	text-indent: 5px;
 	padding-right: 20px;
 }
+
+
+/*extra class*/
+.colorGray {
+	background-color: #CCC;
+}

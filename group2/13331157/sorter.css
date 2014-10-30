@@ -47,16 +47,16 @@ th, td {
 
 /*
 设置栏目被点击是改变的样式
-clicked-style1: 升序样式;
-clicked-style2: 降序样式;
+.ascend-style: 升序样式;
+.descend-style: 降序样式;
 */
-.clicked-style1 {
+.ascend-style {
     background-color: rgba(165, 176, 252, 1);
     background-image: url("ascend.png");
     background-position: right;
     background-repeat: no-repeat;
 }
-.clicked-style2 {
+.descend-style {
 	background-color: rgba(165, 176, 252, 1);
     background-image: url("descend.png");
     background-position: right;

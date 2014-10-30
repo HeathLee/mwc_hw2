@@ -9,110 +9,53 @@ window.onload = function() {
 function getAllTables() {
 	return document.getElementsByTagName("table");
 }
+
 function makeAllTableSortable(tables) {
-	counter = new Array();
 
     for (var i = 0; i < tables.length; i++) {
 		var th = tables[i].rows[0].cells;
-		counter.push(-1);
+		tables[i].col = -1; // 用于在table中记录被点击的th，没有则为-1
 
 		for (var j = 0; j < th.length; j++) {
+			th[j].tableNum = i; // 记录被点击的th所属的table
+			th[j].column = j; // 记录被点击的th
+			th[j].clickFlag = 0; // 用于判断点击后是升序还是降序排序
 
 			th[j].onclick = function() {
-				var table = this.parentNode.parentNode.parentNode, allTables = getAllTables();
-				var tr = table.rows, th = tr[0].cells, column, tableNum, flag;
-				var tr_array = new Array(), values = new Array();
+				var table = this.parentNode.parentNode.parentNode; // 获得被点击的th所属的table
+				var tr = table.rows, th = tr[0].cells;
 
-				for (var k = 0; k < allTables.length; k++){
-					if (allTables[k].innerHTML == table.innerHTML) {
-						tableNum = k;
-						break;
+				// 改变表头
+				if (this.clickFlag == 0) { // 判断用升序还是降序表头
+					if (table.col != -1) { //判断是不是在同一个table中点击
+						th[table.col].className = th[table.col].className.replace(" changed1", "");
+						th[table.col].className = th[table.col].className.replace(" changed2", "");
+						th[table.col].clickFlag = 0; // 去除table中已有表头并将该table中之前被点击列的clickFlag置零
 					}
-				}
-
-				for (var k = 0; k < th.length; k++) {
-					if (th[k].innerHTML == this.innerHTML) {
-						column = k;
-						break;
-					}
-				}
-
-				if (counter[tableNum] == -1) {
-					flag = 0;
-					th[column].className += " changed1";
-				}
-				else if (counter[tableNum] % 10 == column){
-					if (counter[tableNum] < 10) flag = 1;
-					else flag = 0;
-					
-					if (flag != 0) {
-     					th[column].className = th[column].className.replace(" changed1", " changed2");
-					}
-					else {
-						th[column].className = th[column].className.replace(" changed2", " changed1");
-					}
+					th[this.column].className += " changed1"; // 使用升序表头
 				}
 				else {
-					flag = 0;
-
-					if (counter[tableNum] / 10 == 0) {
-						th[counter[tableNum] % 10].className = th[counter[tableNum] % 10].className.replace(" changed1", "");
-					}
-					else {
-						th[counter[tableNum] % 10].className = th[counter[tableNum] % 10].className.replace(" changed2", "");
-					}
-					th[column].className += " changed1";
-				}
-				counter[tableNum] = column + flag * 10;
-
-				for (var k = 1; k < tr.length; k++) {
-					tr_array.push(tr[k].innerHTML);
+					th[this.column].className = th[this.column].className.replace(" changed1", " changed2"); // 使用降序表头
 				}
 
-				for (var k = 1; k < tr.length; k++) {
-					values.push(tr[k].cells[column].innerHTML);
-				} 
+				this.clickFlag = 1 - this.clickFlag;
+				table.col = this.column;
 
-				if (flag == 0) {
-					for (var x = 0; x < values.length - 1; x++) {
-						var temp1, temp2;
+				// 对每一行进行排序，选择排序，根据clickFlag来确定用升序还是降序排序
+				for (var x = 1; x < tr.length - 1; x++) {
+					var temp;
 
-						for (var y = x + 1; y < values.length; y++) {
-							if (values[x] > values[y]) {
-								temp1 = values[x];
-								values[x] = values[y];
-								values[y] = temp1;
-
-								temp2 = tr_array[x];
-								tr_array[x] = tr_array[y];
-								tr_array[y] = temp2;
-							}
+					for (var y = x + 1; y < tr.length; y++) {
+						if ((this.clickFlag != 0 && tr[x].cells[this.column].innerHTML > tr[y].cells[this.column].innerHTML)
+							|| (this.clickFlag == 0 && tr[x].cells[this.column].innerHTML < tr[y].cells[this.column].innerHTML)) {
+							temp = tr[x].innerHTML;
+							tr[x].innerHTML = tr[y].innerHTML;
+							tr[y].innerHTML = temp;
 						}
 					}
-				}
-				else {
-						for (var x = 0; x < values.length - 1; x++) {
-						var temp1, temp2;
-
-						for (var y = x + 1; y < values.length; y++) {
-							if (values[x] < values[y]) {
-								temp1 = values[x];
-								values[x] = values[y];
-								values[y] = temp1;
-
-								temp2 = tr_array[x];
-								tr_array[x] = tr_array[y];
-								tr_array[y] = temp2;
-							}
-						}
-					}
-				} 
-
-
-				for (var k = 0; k < tr_array.length; k++) {
-					tr[k + 1].innerHTML = tr_array[k];
 				}
 			};
 		}
 	}
 }
+
