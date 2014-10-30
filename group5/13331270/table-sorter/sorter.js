@@ -79,3 +79,4 @@ function makeAllTablesSortable(tables) {
 	th[4].onclick = function() {sortTables(tables[1].id, 1, 4);}
 	th[5].onclick = function() {sortTables(tables[1].id, 2, 5, 'date');}
 }
+//代码很工整，不得不说，你做得很好，赞，觉对给你高分。
