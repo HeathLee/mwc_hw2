@@ -12,6 +12,7 @@ table,th,td{
 	border: 1px solid grey;
 	border-collapse: collapse;
 	text-align: left;
+	padding: 2px 5px 0;
 }
 
 th {
@@ -19,6 +20,9 @@ th {
 	background-color: rgba(0,0,255,1);
 	font-weight: bolder;
 	padding-right: 30px;
+	cursor: pointer;
+	-moz-user-select: none;
+	--webkit-user-select: none;
 }
 
 .alternate {
